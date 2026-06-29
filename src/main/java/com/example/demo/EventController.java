@@ -194,7 +194,7 @@ public class EventController
     @GetMapping("/mypicks")
     protected String displayMyPicks(Model model, HttpSession httpSession)
     {
-        String betOutcome = "Scheduled";
+        String betOutcome = "Pending";
 
         AppUser appUser = getOptAppUser(httpSession).orElse(new AppUser());
         if(appUser.getId() == null) return "redirect:/error";
