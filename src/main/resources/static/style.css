@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  background-color: #0d0d0d;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('bg.png');
+  background-color: #0d0d0d;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.box-container {
+  background-color: #161616;
+  width: 100%;
+  max-width: 420px;
+  padding: 55px 45px;
+  border-radius: 6px;
+  box-shadow: 0 0 35px rgba(255, 0, 0, 0.65);
+  text-align: center;
+}
+
+.box-container h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 15px;
+}
+
+.error {
+  color: #bc0505;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.here
+{
+    color: #bc0505;
+    padding: 6px;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.any.input {
+  position: relative;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+{
+    -webkit-box-shadow: 0 0 0 1000px #161616 inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.any.input:active, .any.input:focus
+{
+    color: white !important;
+}
+
+.any.input label {
+  display: block;
+  font-size: 0.9rem;
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.any.input input {
+  width: 100%;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1.5px solid #ffffff;
+  color: #ffffff;
+  padding: 6px 30px 8px 0;
+  font-size: 1.05rem;
+  transition: border-color 0.2s ease;
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: #ad0909;
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #ad0909;
+}
+
+.any.input label:has(+ input:required)::after
+{
+    content: " *";
+    color: red;
+    font-weight: bold;
+}
+
+.profile-Btn
+{
+     position: absolute;
+     right: 20px;
+     top: 20px;
+     width: auto;
+     background-color: #ad0909;
+     color: white;
+     border-radius: 4px;
+     padding: 14px;
+     transition: background-color 0.2s ease;
+     cursor: pointer;
+     border: none;
+     width: 8%;
+     font-size: 1rem;
+     font-weight: 700;
+}
+
+.any.input.username
+{
+    margin-top: 10px;
+}

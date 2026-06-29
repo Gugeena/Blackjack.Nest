@@ -1,0 +1,48 @@
+body {
+  background-color: #0d0d0d;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('bg.png');
+  background-color: #0d0d0d;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.pick-container
+{
+   background-color: #0d0d0d;
+   border: 2px solid #ad0909;
+   border-radius: 20px;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   padding: 30px;
+   gap: 15px;
+   width: 360px;
+   height: 200px;
+}
+
+.bet
+{
+    margin-top: 30px;
+}
+
+.status
+{
+    color: green;
+}
+
+ul
+{
+    list-style-type: none;
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+

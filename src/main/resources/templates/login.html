@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+  </head>
+  <body>
+    <div class="box-container">
+      <h1>Login To Your Blackjack Account</h1>
+      <span class="error" id="error"></span>
+      <form onsubmit="login(event)">
+        <div class="any input username">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username"/>
+        </div>
+
+        <div class="any input">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password"/>
+        </div>
+
+        <button class="submit-btn" type="submit">Login</button>
+      </form>
+      <br>
+      <p>Dont have an account? Register<a href="/register" class="here">here</a></p>
+    </div>
+
+  <script th:src="@{/auth.js}"></script>
+  </body>
+</html>

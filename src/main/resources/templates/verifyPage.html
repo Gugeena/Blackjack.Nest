@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+<h1>Enter The Code Sent To Your Mail</h1>
+
+<div class="box-container">
+    <p class="error" th:if="${error == 'wrongcode'}">Code Is Wrong</p>
+
+    <form action="/verify" method="post">
+
+        <div class="any input">
+            <label for="code">code</label>
+            <input type="text" id="code" name="code">
+        </div>
+
+        <br>
+
+        <button class="submit-btn" type="submit">Verify</button>
+
+    </form>
+</div>
+</body>
+</html>

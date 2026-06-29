@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>PickEm'</title>
+    <link rel="stylesheet" th:href="@{/boutPage.css}" />
+</head>
+<body>
+<ul>
+  <li th:each="bout:${response}">
+      <div class="card">
+          <span class="chosen" th:text="${bout.currentPick} ?: ''"></span>
+          <span class="error"></span>
+          <img class="fighter right" th:src="${bout.firstFighterImage}" >
+
+          <span th:text="${bout.fightersLabel}" class="label"></span>
+
+          <div class="records">
+              <span th:text="${bout.secondFighterRecord}"></span>
+              <span th:text="${bout.firstFighterRecord}  "></span>
+          </div>
+
+          <span class="winner-label">WINNER</span>
+
+          <div class="bet-buttons">
+              <button th:text="${bout.secondLastName}" class="btn fighter-btn"></button>
+              <button th:text="${bout.firstLastName}" class="btn fighter-btn"></button>
+          </div>
+
+          <span class="txt">METHOD</span>
+
+          <div class="method-buttons">
+              <button type="button" class="btn method-btn">Tko</button>
+              <button type="button" class="btn method-btn">Decision</button>
+              <button type="button" class="btn method-btn">Submission</button>
+          </div>
+
+
+          <div>
+              <button class="bet" onclick="submit(event)" th:value="${bout.boutID}">Bet</button>
+              <input type="number" placeholder="Bet amount" class="betAmount">
+          </div>
+
+          <img class="fighter left" th:src="${bout.secondFighterImage}">
+          <input type="hidden" class="eventSlug" th:value="${bout.eventSlug}">
+      </div>
+  </li>
+</ul>
+    <form action="/profile">
+        <button type="submit" class="side profile">Profile</button>
+    </form>
+
+    <form action="/dashboard">
+        <button type="submit" class="side back">Back</button>
+    </form>
+
+    <script src="/boutPage.js"></script>
+
+    <div th:if="${response.isEmpty()}" class="card">
+        <h1 class="no-bouts">No Bouts Officially Announced</h1>
+    </div>
+</body>
+</html>

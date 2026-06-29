@@ -1,0 +1,36 @@
+spring:
+  logging:
+    level:
+      com.zaxxer.hikari: DEBUG
+      org.springframework.jdbc: DEBUG
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  config:
+    import: "optional:file:.env[.properties]"
+  application: "Blacjkack.Nest"
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+          auth: true
+    host: smtp.gmail.com
+    username: ${GMAIL_EMAIL}
+    password: ${GMAIL_PASS}
+    port: ${GMAIL_PORT}
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: ${DATABASE_DRIVER}
+  jpa:
+    hibernate:
+      ddl-auto: update
+      default_schema: public
+    show-sql: true
+

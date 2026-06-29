@@ -1,0 +1,89 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  background-color: #0d0d0d;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('bg.png');
+  background-color: #0d0d0d;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+ul
+{
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.event-btn
+{
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #0d0d0d;
+    border: 2px solid #ad0909;
+    border-radius: 18px;
+    width: 800px;
+    height: 650px;
+    overflow: hidden;
+}
+
+.event-btn.yours
+{
+    width: 800px;
+    height: 300px;
+}
+
+.event-btn:hover
+{
+    background-color: #330d0d;
+}
+
+.display-Image
+{
+    margin-top: 10px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+}
+
+.text
+{
+    margin-top: 25px;
+    color: white;
+}
+
+.profile-Btn
+{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: auto;
+    background-color: #ad0909;
+    color: white;
+    border-radius: 4px;
+    padding: 14px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    border: none;
+    width: 8%;
+    font-size: 1rem;
+    font-weight: 700;
+}

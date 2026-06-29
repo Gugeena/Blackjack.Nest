@@ -1,0 +1,177 @@
+body
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    background-image: url('bg.png');
+    background-color: #0d0d0d;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.card
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 225px;
+    gap: 10px;
+    margin: 50px;
+    background-color: #0d0d0d;
+    border: 2px solid #ad0909;
+    border-radius: 20px;
+    width: 700px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    position: relative;
+    padding: 20px;
+}
+
+.records
+{
+    margin-bottom: 20px;
+}
+
+.bet-row > *
+{
+    display: inline-block;
+}
+
+.card span
+{
+    color: white;
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+.btn
+{
+  background-color: #ad0909;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  width: 90px;
+  height: 25px;
+}
+
+.card img.fighter.left
+{
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 200px;
+    object-fit: contain;
+}
+
+.card img.fighter.right
+{
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 200px;
+    object-fit: contain;
+}
+
+.bet
+{
+    background-color: #3cab3b;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    width: 90px;
+    height: 30px;
+}
+
+.fighter-btn.selected
+{
+    background-color: gold;
+    color: black;
+}
+
+.method-btn.selected
+{
+    background-color: gold;
+    color: black;
+}
+
+.card .error
+{
+    position:absolute;
+    color: green;
+    bottom: 0px;
+}
+
+.card .error.deselected
+{
+    color: red;
+}
+
+.card .chosen
+{
+    position:absolute;
+    color: blue;
+    top: 68px;
+}
+
+.side
+{
+     position: absolute;
+     top: 20px;
+     width: auto;
+     background-color: #ad0909;
+     color: white;
+     border-radius: 4px;
+     padding: 14px;
+     transition: background-color 0.2s ease;
+     cursor: pointer;
+     border: none;
+     width: 8%;
+     font-size: 1rem;
+     font-weight: 700;
+}
+
+.side.profile
+{
+    right: 20px;
+}
+
+.side.back
+{
+    left: 20px;
+}
+
+.betAmount
+{
+    radius: 8px;
+    background-color: #3cab3b;
+    color: #ffffff;
+    border-color: transparent;
+    border-radius: 8px;
+}
+
+.betAmount::placeholder
+{
+    color: white;
+    opacity = 1;
+}
+
+.no-bouts
+{
+    color: white;
+    padding: 0;
+}

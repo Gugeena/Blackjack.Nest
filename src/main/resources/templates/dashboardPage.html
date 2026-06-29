@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/dashboardPage.css}" />
+</head>
+<body>
+    <ul>
+        <li th:each="event: ${events}">
+            <div class="event-container">
+                <form th:action="@{/bouts/{id}(id=${event.slug})}">
+                    <button type = "submit" class="event-btn">
+                        <h1 th:text="${event.title}" class="text"></h1>
+                        <span th:text="${event.locationText}" class="text"></span>
+                        <span th:text="${event.startTime}" class="text"></span>
+                        <img th:src="${event.image}" class="display-Image"/>
+                    </button>
+                </form>
+            </div>
+        </li>
+    </ul>
+
+    <div class="event-container">
+        <form action="/mypicks">
+            <button type = "submit" class="event-btn yours">
+                <h1 class="text">My Picks</h1>
+            </button>
+        </form>
+    </div>
+
+    <form action="/profile">
+        <button type="submit" class="profile-Btn">Profile</button>
+    </form>
+</body>
+</html>

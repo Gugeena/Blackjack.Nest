@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPicks</title>
+   <link rel="stylesheet" th:href="@{/myPicksPage.css}" />
+</head>
+<body>
+  <ul>
+    <li th:each="pick: ${picks}">
+      <div class="pick-container">
+        <span th:text="${pick.label}"></span>
+        <span th:text="${pick.chosenWinner}"></span>
+        <span th:text="${pick.status}" class="status"></span>
+        <span th:text="${pick.betAmountLabel}" class="bet"></span>
+        <span th:text="${pick.payOutLabel}"></span>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

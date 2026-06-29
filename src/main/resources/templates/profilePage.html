@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+<div class="box-container">
+    <h1 th:text="${username}">Gugena</h1>
+    <p th:text="${medals}"></p>
+    <p th:text="${mail}"></p>
+    <br>
+    <p th:text="${totalPicks}"></p>
+    <p th:text="${pickAccuracy}"></p>
+    <br>
+    <br>
+    <form action="/logout">
+        <button class="submit-btn" type="submit">Log Out</button>
+    </form>
+    <form method="post">
+        <input type="hidden" name="_method" value="delete">
+        <button class="submit-btn" type="submit">Delete Account</button>
+    </form>
+</div>
+</body>
+</html>

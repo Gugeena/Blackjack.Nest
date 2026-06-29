@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+</head>
+<body>
+<div class="box-container">
+    <h1>Register To Blackjack</h1>
+
+    <span class="error" id="error"></span>
+    <form onsubmit="register(event)">
+        <div class="any input username">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+
+        <div class="any input">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="any input">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+        </div>
+
+        <button type="submit" class="submit-btn">Register</button>
+
+        <br>
+        <br>
+        <p>Already have an account? Login<a href="/login" class="here">here</a></p>
+    </form>
+</div>
+
+    <script th:src="@{/auth.js}"></script>
+</body>
+</html>
