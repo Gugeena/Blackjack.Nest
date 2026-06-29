@@ -1,4 +1,3 @@
-# 🥊 BlackJack.Nest
 # 🥊 Blackjack.Nest
 
 > **A UFC fantasy prediction platform built with Java Spring Boot.**
@@ -8,7 +7,7 @@ Blackjack.Nest is a web application where MMA fans can predict the outcome of up
 Unlike traditional betting platforms, **Blackjack.Nest does not involve real money or gambling.** Medals exist solely as an in-app scoring system.
 
 > *"Perfection is not attainable, but if we chase perfection, we can catch excellence."*
-> **— Georges St-Pierre**
+> **— Georges "Rush" St-Pierre**
 
 ---
 
@@ -75,31 +74,20 @@ Each user has access to:
 
 # 🚀 Getting Started
 
-## 1. Clone the Repository
+## 1. Clone Or Download the Repository 
 
-```bash
-git clone https://github.com/yourusername/Blackjack.Nest.git
 ```
+https://github.com/Gugeena/Blackjack.Nest
+```
+## 2. Configure Environment Variables
 
-## 2. Open the project
+IMPORTANT!!!: DOWNLOAD THIS FILE CHANGE ITS NAME TO ".env" AND PLACE IT IN BLACJACKS'S ROOT FOLDER (\Blackjack.Nest) : [*LINK TO GOOGLE DRIVE*](https://drive.google.com/file/d/1p74WPbQ79Lwkm9IOjBt1PshiRi_-Xvio/view?usp=sharing)
+
+## 3. Open the project
 
 Open the project using **IntelliJ IDEA**.
 
-## 3. Configure Environment Variables
-
-Create a `.env` file using `.env.example`.
-
-Fill in:
-
-* PostgreSQL credentials
-* Email credentials
-* Cito API credentials (if required)
-
-## 4. Configure PostgreSQL
-
-Create your PostgreSQL database and update the connection settings.
-
-## 5. Run the Application
+## 4. Run the Application
 
 Start the Spring Boot application.
 
@@ -136,13 +124,18 @@ Once official UFC results become available, Blackjack.Nest synchronizes the resu
 src
 ├── main
 │   ├── java
-│   │   ├── config
-│   │   ├── controller
-│   │   ├── dto
-│   │   ├── entity
-│   │   ├── repository
-│   │   ├── security
-│   │   └── service
+│   │   └── com
+│   │       └── example
+│   │           └── demo
+│   │               ├── config
+│   │               ├── controller
+│   │               ├── dto
+│   │               ├── entity
+│   │               ├── repository
+│   │               ├── security
+│   │               ├── service
+│   │               └── DemoApplication.java
+│   │
 │   └── resources
 │       ├── static
 │       ├── templates
@@ -166,6 +159,7 @@ src
 
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/2cafc211-002f-4367-bedd-f67dbf95ed18" />
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/f22a548b-d1a8-4107-8ebf-4cf912ab828a" />
+
 ---
 
 # 📜 License
@@ -179,4 +173,3 @@ This project was created for educational and portfolio purposes.
 **ლაშა-გიორგი გუგენიშვილი**
 
 Solo Project • Java Spring Boot • UFC Fantasy Prediction Platform
-
