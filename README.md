@@ -81,7 +81,7 @@ https://github.com/Gugeena/Blackjack.Nest
 ```
 ## 2. Configure Environment Variables
 
-IMPORTANT!!!: DOWNLOAD THIS FILE CHANGE ITS NAME TO ".env" AND PLACE IT IN BLACJACKS'S ROOT FOLDER (\Blackjack.Nest) : [*links chavagdeb mere*](https://drive.google.com/file/d/1p74WPbQ79Lwkm9IOjBt1PshiRi_-Xvio/view?usp=sharing)
+IMPORTANT!!!: DOWNLOAD THIS FILE CHANGE ITS NAME TO ".env" AND PLACE IT IN BLACJACKS'S ROOT FOLDER (\Blackjack.Nest) : [*LINK TO GOOGLE DRIVE*](https://drive.google.com/file/d/1p74WPbQ79Lwkm9IOjBt1PshiRi_-Xvio/view?usp=sharing)
 
 ## 3. Open the project
 
