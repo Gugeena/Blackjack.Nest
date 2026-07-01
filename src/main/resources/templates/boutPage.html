@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>PickEm'</title>
     <link rel="stylesheet" th:href="@{/boutPage.css}" />
+    <link rel="stylesheet" th:href="@{/loading.css}" />
 </head>
 <body>
 <ul>
@@ -35,9 +36,8 @@
               <button type="button" class="btn method-btn">Submission</button>
           </div>
 
-
           <div>
-              <button class="bet" onclick="submit(event)" th:value="${bout.boutID}">Bet</button>
+              <button class="bet loader" onclick="submit(event)" th:value="${bout.boutID}" id="card-btn">Bet</button>
               <input type="number" placeholder="Bet amount" class="betAmount">
           </div>
 
@@ -47,17 +47,19 @@
   </li>
 </ul>
     <form action="/profile">
-        <button type="submit" class="side profile">Profile</button>
+        <button type="submit" class="side profile loader" value="Profile">Profile</button>
     </form>
 
     <form action="/dashboard">
-        <button type="submit" class="side back">Back</button>
+        <button type="submit" class="side back loader" value="Back">Back</button>
     </form>
 
-    <script src="/boutPage.js"></script>
+    <script th:src="@{/boutPage.js}"></script>
 
     <div th:if="${response.isEmpty()}" class="card">
         <h1 class="no-bouts">No Bouts Officially Announced</h1>
     </div>
+
+    <script th:src="@{/loading.js}"></script>
 </body>
 </html>

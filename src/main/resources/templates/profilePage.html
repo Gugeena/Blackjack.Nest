@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
+    <link rel="stylesheet" th:href="@{/loading.css}" />
 </head>
 <body>
 <div class="box-container">
@@ -13,15 +14,23 @@
     <br>
     <p th:text="${totalPicks}"></p>
     <p th:text="${pickAccuracy}"></p>
+    <p th:text="${globalRank}"></p>
     <br>
     <br>
     <form action="/logout">
         <button class="submit-btn" type="submit">Log Out</button>
     </form>
+
     <form method="post">
         <input type="hidden" name="_method" value="delete">
-        <button class="submit-btn" type="submit">Delete Account</button>
+        <button class="submit-btn loader" type="submit">Delete Account</button>
     </form>
+
+    <form action="/dashboard">
+        <button type="submit" class="side back loader" value="Dashboard">Dashboard</button>
+    </form>
+
+    <script th:src="@{loading.js}"></script>
 </div>
 </body>
 </html>

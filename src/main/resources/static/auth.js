@@ -7,17 +7,21 @@ async function register(event)
     const email = document.getElementById("email").value;
     const error = document.getElementById("error");
 
+    const loader = document.getElementById("loader");
+
     const regex = /^[A-Za-z0-9]+$/;
 
     if(username.length < 4 || password.length < 4)
     {
+        removeLoading("Register", loader);
         error.textContent = "Username And Password Must Be Over 4 Characters";
         return;
     }
 
     if(!regex.test(username))
     {
-        error.textContent = "Username Must Only Contain Letters And Characters";
+        removeLoading("Register", loader);
+        error.textContent = "Username Must Only Contain Letters And Numbers";
         return;
     }
 
@@ -38,19 +42,24 @@ async function register(event)
                 body: formData
             });
 
-            const data = await response.json();
-
+          console.log("abou tto unwrap");
+          const data = await response.json();
+          console.log("unwraped");
           if(!response.ok)
           {
+             removeLoading("Register", loader);
+
             error.textContent = data.error;
           }
           else
           {
+             document.body.style.pointerEvents = 'none';
              window.location.href = data.redirect;
           }
     }
     catch(err)
     {
+       removeLoading("Register", loader);
        error.textContent = "Server Down"; return
     }
 }
@@ -64,9 +73,11 @@ async function login(event)
 
     const error = document.getElementById("error");
 
+    const loader = document.getElementById("loader");
+
     if(username.length < 4 || password.length < 4)
     {
-        console.log("aint passing");
+        removeLoading("Login", loader);
         error.textContent = "Invalid Username Or Password";
         return;
     }
@@ -88,6 +99,7 @@ async function login(event)
 
        if(!response.ok)
        {
+          removeLoading("Login", loader);
           error.textContent = data.error;
        }
        else
@@ -97,6 +109,15 @@ async function login(event)
     }
     catch(err)
     {
-       error.textContent = "Server Down"; return
+       if(loader != null) removeLoading("Login", loader);
+       error.textContent = "Server Down";
+       return;
     }
+}
+
+function removeLoading(text, loader)
+{
+    document.body.classList.remove('loading');
+    loader.textContent = text;
+    event.stopImmediatePropagation();
 }

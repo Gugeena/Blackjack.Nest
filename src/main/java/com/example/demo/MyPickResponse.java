@@ -14,4 +14,7 @@ public class MyPickResponse
     private String status;
     private String betAmountLabel;
     private String payOutLabel;
+    private String eventLabel;
+    private String id;
+    private boolean inParlay;
 }

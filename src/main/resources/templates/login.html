@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
+    <link rel="stylesheet" th:href="@{/loading.css}" />
   </head>
   <body>
     <div class="box-container">
@@ -15,17 +16,18 @@
           <input type="text" id="username" name="username"/>
         </div>
 
-        <div class="any input">
+        <div class="any input lower">
           <label for="password">Password</label>
           <input type="password" id="password" name="password"/>
         </div>
-
-        <button class="submit-btn" type="submit">Login</button>
+        <a href="/forgotPassword" class="here lower">Forgot Password?</a>
+        <button class="submit-btn loader" type="submit" value="Login" id="loader">Login</button>
       </form>
       <br>
       <p>Dont have an account? Register<a href="/register" class="here">here</a></p>
     </div>
 
   <script th:src="@{/auth.js}"></script>
+  <script th:src="@{/loading.js}"></script>
   </body>
 </html>

@@ -32,6 +32,9 @@ public class EventController
     @Autowired
     private EventCacheService eventCacheService;
 
+    @Autowired
+    private ParlayService parlayService;
+
     public EventController(RestClient restClient)
     {
         this.restClient = restClient;
@@ -40,11 +43,17 @@ public class EventController
     @GetMapping("/dashboard")
     protected String displayDashboard(Model model)
     {
+        System.out.println("in");
+        long start = System.currentTimeMillis();
+
+
         EventSummaryRequest eventSummaryResponse = restClient.get()
                 .uri(upComingEP)
                 .header("x-api-key", "cito_36082cadcd41bc5a3eb5dbc73a5ad0f224522af9fe36d6904a2d66d848e7a716")
                 .retrieve()
                 .body(EventSummaryRequest.class);
+
+        System.out.println("API took " + (System.currentTimeMillis() - start) + " ms");
 
         List<EventSummary> eventsSummaries = eventSummaryResponse.data;
 
@@ -154,7 +163,6 @@ public class EventController
         return "boutPage";
     }
 
-
     @PostMapping("/pick")
     @ResponseBody
     protected ResponseEntity<?> addPick(@RequestParam String winner,
@@ -236,11 +244,7 @@ public class EventController
                 }
                 else boutsRequest = alreadyRequested.get(picksEventSlug);
 
-                List<Bout> bouts = boutsRequest.data;
-
-                bouts = bouts.stream().filter(onBout -> onBout.getId().equals(pick.getBoutId())).toList();
-
-                Bout bout = bouts.getFirst();
+                Bout bout = getBoutFromPickFromEventById(pick, boutsRequest);
 
                 if(!bout.getStatus().equals("completed"))
                 {
@@ -248,21 +252,10 @@ public class EventController
                     continue;
                 }
 
-                String boutWinnerSlug = bout.getWinnerFighterSlug().toLowerCase();
-                String boutMethod = bout.getMethod().toLowerCase();
-                String chosenWinner = pick.getChosenWinner().toLowerCase();
-                String chosenMethod = pick.getChosenMethod().toLowerCase();
-
-                chosenMethod = switch(chosenMethod)
-                {
-                    case "submission" -> "sub";
-                    case "decision" -> "dec";
-                    case "tko" -> "ko/tko";
-                    default -> chosenMethod;
-                };
+                pick.setCompleted(true);
 
                 boolean landed = true;
-                if(boutWinnerSlug.contains(chosenWinner) && boutMethod.contains(chosenMethod)) betOutcome = "Correct!";
+                if((analayzeBoutConclusion(bout, pick))) betOutcome = "Correct!";
                 else
                 {
                     landed = false;
@@ -270,7 +263,8 @@ public class EventController
                     betOutcome = "The House Always Wins!";
                 }
 
-                if(!pick.getProcessed()) updateMedals(landed, appUser, pick.getBetAmount());
+                BigInteger multiplier = new BigInteger("2");
+                if(!pick.getProcessed() && pick.getParlay() == null) updateMedals(landed, appUser, pick.getBetAmount(), multiplier);
 
                 pick.setProcessed(true);
             }
@@ -278,8 +272,87 @@ public class EventController
             buildPick(myPickResponse, pick, betOutcome, response);
         }
 
+        List<Parlay> parlays = parlayService.getAllByUser(appUser);
+        List<ParlayResponse> parlayResponses = new ArrayList<>();
+        if(parlays != null && !parlays.isEmpty())
+        {
+            for(Parlay parlay : parlays)
+            {
+                ParlayResponse parlayResponse = new ParlayResponse();
+
+                List<Pick> parlayPicks = parlay.getPicks();
+                String label = getFightSlugPretty(parlayPicks.getFirst().getEventSlug().toUpperCase());
+                parlayResponse.setLabel(label);
+
+                List<String> pickLabels = parlayPicks.stream().map(Pick::getLabel).toList();
+
+                parlayResponse.setPickLabels(pickLabels);
+
+                BigInteger betAmount = parlayPicks.stream().map(Pick::getBetAmount).reduce(BigInteger.ZERO,BigInteger::add);
+
+                parlayResponse.setBetAmount(betAmount);
+
+                parlayResponses.add(parlayResponse);
+
+                boolean completed = parlay.getPicks().getFirst().isCompleted();
+
+                String parlayOutCome = "Pending";
+
+                if(completed && !parlay.isProcessed())
+                {
+                    parlay.setProcessed(true);
+
+                    boolean correct = true;
+
+                    for(Pick pick : parlayPicks)
+                    {
+                        BoutsRequest boutsRequest = alreadyRequested.get(pick.getEventSlug());
+
+                        Bout bout = getBoutFromPickFromEventById(pick, boutsRequest);
+
+                        if(!analayzeBoutConclusion(bout, pick))
+                        {
+                            correct = false;
+                            parlayOutCome = "The House Always Wins!";
+                        }
+                    }
+                    parlayOutCome = "Correct!";
+                    BigInteger multiplier = new BigInteger("4");
+                    updateMedals(correct, appUser, betAmount, multiplier);
+                }
+
+                parlayResponse.setStatus(parlayOutCome);
+            }
+        }
+
         model.addAttribute("picks", response);
+        model.addAttribute("parlays", parlayResponses);
+
         return "myPicksPage";
+    }
+
+    @PostMapping("/createParlay")
+    @ResponseBody
+    protected ResponseEntity<?> createParlay(@RequestParam List<Long> pickIds, HttpSession httpSession)
+    {
+        List<Pick> picks = pickService.getPicksFromIds(pickIds);
+
+        Parlay parlay = new Parlay();
+        parlay.setPicks(picks);
+        Optional<AppUser> appUserOPT = getOptAppUser(httpSession);
+        AppUser appUser = appUserOPT.orElseThrow();
+        parlay.setUser(appUser);
+        parlay.setProcessed(false);
+
+        parlayService.save(parlay);
+
+        for(Pick pick : picks)
+        {
+            pick.setParlay(parlay);
+            pickService.save(pick);
+        }
+
+        return ResponseEntity.ok(Map.of("redirect", "mypicks"));
     }
 
     /*
@@ -291,14 +364,12 @@ public class EventController
     }
      */
 
-    void updateMedals(boolean landed, AppUser appUser, BigInteger betAmount)
+    void updateMedals(boolean landed, AppUser appUser, BigInteger betAmount, BigInteger multiplier)
     {
         BigInteger currentMedals = appUser.getMedals();
 
         if(landed)
         {
-            BigInteger multiplier = new BigInteger("2");
-
             currentMedals = betAmount.multiply(multiplier).add(currentMedals);
 
             appUser.setCorrectPicks(appUser.getCorrectPicks()+1);
@@ -322,12 +393,55 @@ public class EventController
     MyPickResponse buildPick(MyPickResponse myPickResponse, Pick pick, String betOutcome, List<MyPickResponse> response)
     {
         myPickResponse.setLabel(pick.getChosenWinner() + " VS " + pick.getLoser());
-        myPickResponse.setChosenWinner("Your Pick: " + pick.getChosenWinner() + " By " + pick.getChosenMethod());
+        //myPickResponse.setChosenWinner("Your Pick: " + pick.getChosenWinner() + " By " + pick.getChosenMethod());
+        myPickResponse.setChosenWinner("Your Pick: " + pick.getLabel());
         myPickResponse.setBetAmountLabel("Bet Amount: " + pick.getBetAmount());
         myPickResponse.setStatus("Status: " + betOutcome);
         myPickResponse.setPayOutLabel("Payout: " + pick.getBetAmount().multiply(new BigInteger("2")));
+        boolean inParlay = pick.getParlay() != null;
+        System.out.println(inParlay);
+        myPickResponse.setInParlay(inParlay);
+        String eventSlugUp = pick.getEventSlug().toUpperCase();
+        myPickResponse.setEventLabel(getFightSlugPretty(eventSlugUp));
+        myPickResponse.setId(String.valueOf(pick.getId()));
         response.add(myPickResponse);
 
         return myPickResponse;
+    }
+
+    String getFightSlugPretty(String eventSlug)
+    {
+        String result;
+        String[] parts = eventSlug.split("-");
+        if(eventSlug.contains("UFC-FIGHT-NIGHT")) {result = "UFC FIGHT NIGHT (" + parts[3] + "-" + parts[4] + "-" + parts[5] + ")";}
+        else {result = parts[0] + " " + parts[1];}
+        return result;
+    }
+
+    Bout getBoutFromPickFromEventById(Pick pick, BoutsRequest boutsRequest)
+    {
+        List<Bout> bouts = boutsRequest.data;
+
+        bouts = bouts.stream().filter(onBout -> onBout.getId().equals(pick.getBoutId())).toList();
+
+        return bouts.getFirst();
+    }
+
+    boolean analayzeBoutConclusion(Bout bout, Pick pick)
+    {
+        String boutWinnerSlug = bout.getWinnerFighterSlug().toLowerCase();
+        String boutMethod = bout.getMethod().toLowerCase();
+        String chosenWinner = pick.getChosenWinner().toLowerCase();
+        String chosenMethod = pick.getChosenMethod().toLowerCase();
+
+        chosenMethod = switch(chosenMethod)
+        {
+            case "submission" -> "sub";
+            case "decision" -> "dec";
+            case "tko" -> "ko/tko";
+            default -> chosenMethod;
+        };
+
+        return boutWinnerSlug.contains(chosenWinner) && boutMethod.contains(chosenMethod);
     }
 }

@@ -3,7 +3,6 @@ body {
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-height: 100vh;
   background-image: url('bg.png');
   background-color: #0d0d0d;
@@ -11,6 +10,8 @@ body {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  padding-top: 70px;
+  padding-left: 13px;
 }
 
 .pick-container
@@ -40,9 +41,186 @@ body {
 ul
 {
     list-style-type: none;
-    gap: 20px;
+    gap: 30px;
     display: flex;
     flex-wrap: wrap;
+    margin-left: 0px;
+    padding-left: 0px;
 }
 
+.side
+{
+     position: absolute;
+     top: 20px;
+     width: auto;
+     background-color: #ad0909;
+     color: white;
+     border-radius: 4px;
+     padding: 14px;
+     transition: background-color 0.2s ease;
+     cursor: pointer;
+     border: none;
+     width: 8%;
+     font-size: 1rem;
+     font-weight: 700;
+}
+
+.side.profile
+{
+    right: 20px;
+}
+
+.side.back
+{
+    left: 20px;
+}
+
+.card
+{
+    position: relative;
+    margin: 0 auto;
+    top: -63px;
+    left: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    height: 225px;
+    gap: 10px;
+    margin: 50px;
+    background-color: #0d0d0d;
+    border: 2px solid #ad0909;
+    border-radius: 20px;
+    width: 700px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    position: relative;
+    padding: 20px;
+}
+
+h1
+{
+    margin-top: 5px;
+    font-size: 3rem;
+    text-align: left !important;
+}
+
+.picks
+{
+    padding: 23px;
+    background-color: rgba(13, 13, 13, 0.8);
+    border: 1px solid transparent;
+    border-radius: 20px;
+    margin-bottom: 60px;
+}
+
+.picks.upper
+{
+    margin-bottom: 20px;
+}
+
+.parlay-start
+{
+    width: auto;
+    background-color: #ad0909;
+    color: white;
+    border-radius: 4px;
+    padding: 5px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-size: 0.65rem;
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.parlay-start.create
+{
+    position: relative;
+    top: 17px;
+    right: 10px;
+    background-color: #3cab3b;
+    width: 120px;
+    height: 40px;
+    font-size: 1rem;
+    margin-bottom: 0px;
+}
+
+.parlay-start.create:disabled
+{
+    background-color: #8f8f8f;
+}
+
+.parlay-start.selected
+{
+    background-color: gold;
+    color: black;
+}
+
+.parlay-start:disabled
+{
+    background-color: #3f3f3f;
+}
+
+.lower-part
+{
+    display: flex;
+    gap: 200px;
+}
+
+.lower-part.upper
+{
+    position: relative;
+}
+
+.lower-part.parlay
+{
+    margin-top: 30px;
+}
+
+.error
+{
+    position: absolute;
+    left: 236px;
+    top: 40px;
+    color: red;
+}
+
+.parlayDeclerationParent
+{
+    display: flex;
+    gap: 30px;
+}
+
+.inParlay.parent
+{
+    position: relative;
+}
+
+/*
+.inParlay
+{
+   color: gold;
+   position: absolute;
+   top: -2px;
+}
+*/
+
+.error.inParlay
+{
+    color: gold;
+}
+
+.parlayFor
+{
+    margin-bottom: 15px;
+}
+
+.no-bouts
+{
+    color: white;
+    padding: 0;
+}
 

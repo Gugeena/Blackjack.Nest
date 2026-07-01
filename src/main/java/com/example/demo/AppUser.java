@@ -33,11 +33,14 @@ public class AppUser
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Pick> picks;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Parlay> parlays;
+
     @Column
     private BigInteger medals;
 
     @Column
-    private int pickAccuracy;
+    private double pickAccuracy;
 
     @Column
     private int correctPicks;

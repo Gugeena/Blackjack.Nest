@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 
 @Controller
@@ -67,7 +64,8 @@ public class AuthController
     protected ResponseEntity<?> registerUser(@RequestParam String username,
                               @RequestParam String password,
                               @RequestParam(required = false) String email,
-                              Model model)
+                              Model model,
+                              HttpSession httpSession)
     {
         boolean exists = userService.existsByUsername(username);
 
@@ -79,7 +77,6 @@ public class AuthController
                 ));
         }
 
-        AppUser newUser = userService.createUser(username, password);
         if(email != null && !email.isBlank())
         {
             boolean success = emailService.isValid(email);
@@ -90,11 +87,30 @@ public class AuthController
                                 "error", "Email Invalid"
                         ));
             }
-            newUser.setEmail(email);
+
+            httpSession.setAttribute("email", email);
+
+            String otp = String.valueOf(new Random().nextInt(100000, 1000000));
+            httpSession.setAttribute("otp", otp);
+            try
+            {
+                emailService.sendOtp(email, otp);
+            }
+            catch (Exception e)
+            {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body(Map.of(
+                                "error", "Make Sure Email Is Valid"
+                        ));
+            }
+
+            httpSession.setAttribute("username", username);
+            httpSession.setAttribute("password", password);
+            return ResponseEntity.ok(Map.of("redirect", "verify"));
         }
-        newUser.setMedals(BigInteger.valueOf(271000));
-        newUser.setPickAccuracy(100);
-        userService.saveUser(newUser);
+
+        CreateUser(username, password, null);
+
         return ResponseEntity.ok(Map.of("redirect", "/login"));
     }
 
@@ -110,17 +126,16 @@ public class AuthController
     }
 
     @PostMapping("/login")
+    @ResponseBody
     protected ResponseEntity<?> login(@RequestParam String username,
                            @RequestParam String password,
-                           HttpSession httpSession,
-                           HttpServletRequest request,
-                           HttpServletResponse response)
+                           HttpSession httpSession)
     {
         Optional<AppUser> userOpt = userService.authenticateUserByUsername(username);
 
         if(userOpt.isEmpty())
         {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "User Not Found"));
         }
 
@@ -133,6 +148,7 @@ public class AuthController
         }
 
         httpSession.setAttribute("username", username);
+
 
         if(appUser.getEmail() != null && !appUser.getEmail().isBlank())
         {
@@ -169,19 +185,32 @@ public class AuthController
     {
         String savedCode = (String) httpSession.getAttribute("otp");
         String username = (String) httpSession.getAttribute("username");
+        String password = (String) httpSession.getAttribute("password");
+        String email = (String) httpSession.getAttribute("email");
+
+        httpSession.removeAttribute("password");
+        httpSession.removeAttribute("email");
+        httpSession.removeAttribute("otp");
 
         if (!code.equals(savedCode))
         {
             return "redirect:/verify?error=wrongcode";
         }
 
-        AppUser appUser = userService.authenticateUserByUsername(username).orElseThrow();
+        if(email != null)
+        {
+            CreateUser(username, password, email);
+            return "redirect:/login";
+        }
+        else
+        {
+            System.out.println("email is not null");
+            AppUser appUser = userService.authenticateUserByUsername(username).orElseThrow();
 
-        setContext(appUser, httpSession);
+            setContext(appUser, httpSession);
 
-        httpSession.removeAttribute("otp");
-
-        return "redirect:/dashboard";
+            return "redirect:/dashboard";
+        }
     }
 
     @GetMapping("/profile")
@@ -197,10 +226,20 @@ public class AuthController
 
         int correctPicks = appUser.getCorrectPicks();
         int totalPicks = appUser.getTotalPicks();
-        double pickAccuracy = 100;
-        if(totalPicks != 0)  pickAccuracy = (double) correctPicks / totalPicks * 100;
-        model.addAttribute("pickAccuracy", "Pick Accuracy: " + pickAccuracy + "%");
+        double pickAccuracy = -1;
+        String pickAccuracyStr = "N/A";
+        String rankStr = "N/A";
+        if(totalPicks != 0)
+        {
+            pickAccuracy = (double) correctPicks / totalPicks * 100;
+            pickAccuracyStr = pickAccuracy  + "%";
+
+            appUser.setPickAccuracy(pickAccuracy);
+            rankStr = String.valueOf(userService.getRank(pickAccuracy));
+        }
+        model.addAttribute("pickAccuracy", "Pick Accuracy: " + pickAccuracyStr);
         model.addAttribute("totalPicks", "Total picks: " + totalPicks);
+        model.addAttribute("globalRank", "Global Rank: " + rankStr  );
 
         return "profilePage";
     }
@@ -215,6 +254,83 @@ public class AuthController
         httpSession.invalidate();
 
         return "redirect:/logout";
+    }
+
+    @GetMapping("/forgotPassword")
+    protected String displayForgotPasswordPage()
+    {
+        return "forgotPasswordPage";
+    }
+
+    @PostMapping("/forgotPassword")
+    @ResponseBody
+    protected ResponseEntity<?> sendCode(@RequestParam String username, HttpSession httpSession)
+    {
+        String otp = String.valueOf(new Random().nextInt(100000, 1000000));
+        httpSession.setAttribute("otpForForgot", otp);
+
+        Optional<AppUser> userOpt = userService.authenticateUserByUsername(username);
+
+        if(userOpt.isEmpty())
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "User Not Found"));
+        }
+
+        AppUser appUser = userOpt.get();
+
+        boolean success = emailService.sendOtp(appUser.getEmail(), otp);
+        if(!success)
+        {
+            return ResponseEntity.ok(Map.of("redirect", "error"));
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/forgotPassword")
+    protected ResponseEntity<?> UpdatePassword(@RequestParam String username, @RequestParam String password)
+    {
+        //REMINDER FOR FUTURE LASHA SHESADZLOA SHECVALA USERMA
+
+        try
+        {
+            Optional<AppUser> userOpt = userService.authenticateUserByUsername(username);
+
+            if(userOpt.isEmpty())
+            {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "User Not Found"));
+            }
+
+            AppUser appUser = userOpt.get();
+
+            userService.updatePassword(appUser, password);
+
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e)
+        {
+            //ME CHAIDANI VAR
+            
+            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT)
+                    .body(Map.of("error", "Error"));
+        }
+    }
+
+    @PostMapping("/checkCode")
+    @ResponseBody
+    protected ResponseEntity<?> verifyCode(@RequestParam String code, HttpSession httpSession, Model model)
+    {
+        String otp = (String) httpSession.getAttribute("otpForForgot");
+        httpSession.removeAttribute("otpForForgot");
+        if(!otp.equals(code))
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Wrong Code"));
+        }
+
+        return ResponseEntity.ok(Map.of("checking", true));
     }
 
     boolean checkAuth()
@@ -241,5 +357,19 @@ public class AuthController
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+    }
+
+    void CreateUser(String username, String password, String email)
+    {
+        AppUser newUser = userService.createUser(username, password);
+
+        newUser.setMedals(BigInteger.valueOf(271000));
+        newUser.setPickAccuracy(-1);
+
+        if(email != null)
+        {
+            newUser.setEmail(email);
+        }
+        userService.saveUser(newUser);
     }
 }

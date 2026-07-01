@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" th:href="@{/dashboardPage.css}" />
+    <link rel="stylesheet" th:href="@{/loading.css}" />
 </head>
 <body>
     <ul>
         <li th:each="event: ${events}">
             <div class="event-container">
                 <form th:action="@{/bouts/{id}(id=${event.slug})}">
-                    <button type = "submit" class="event-btn">
+                    <button type = "submit" class="event-btn loader" id="card-btn">
                         <h1 th:text="${event.title}" class="text"></h1>
                         <span th:text="${event.locationText}" class="text"></span>
                         <span th:text="${event.startTime}" class="text"></span>
@@ -23,14 +24,16 @@
 
     <div class="event-container">
         <form action="/mypicks">
-            <button type = "submit" class="event-btn yours">
-                <h1 class="text">My Picks</h1>
+            <button type = "submit" class="event-btn yours loader" value="My Picks" id="myPicks">
+                <h1 class="text" value="My Picks">My Picks</h1>
             </button>
         </form>
     </div>
 
     <form action="/profile">
-        <button type="submit" class="profile-Btn">Profile</button>
+        <button type="submit" class="profile-Btn loader" value="Profile">Profile</button>
     </form>
+
+    <script th:src="@{/loading.js}"></script>
 </body>
 </html>

@@ -13,30 +13,40 @@ import java.math.BigInteger;
 public class Pick
 {
     @Column
-    public String chosenWinner;
+    private String chosenWinner;
 
     @Column String loser;
 
     @Column
-    public String chosenMethod;
+    private String chosenMethod;
 
     @Column
-    public String boutId;
+    private String boutId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    public AppUser user;
+    private AppUser user;
 
     @Column
-    public BigInteger betAmount;
+    private BigInteger betAmount;
 
     @Column
-    public Boolean processed;
+    private Boolean processed;
 
     @Column
-    public String eventSlug;
+    private String eventSlug;
+
+    @ManyToOne
+    @JoinColumn(name = "parlay_id")
+    private Parlay parlay;
+
+    @Column
+    private String label;
+
+    @Column
+    private boolean completed;
 }

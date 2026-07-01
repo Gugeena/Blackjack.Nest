@@ -1,0 +1,4 @@
+body.loading *
+{
+    cursor: wait !important
+}

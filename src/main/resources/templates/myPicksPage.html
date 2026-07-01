@@ -4,18 +4,70 @@
     <meta charset="UTF-8">
     <title>MyPicks</title>
    <link rel="stylesheet" th:href="@{/myPicksPage.css}" />
+    <link rel="stylesheet" th:href="@{/loading.css}" />
 </head>
 <body>
-  <ul>
-    <li th:each="pick: ${picks}">
-      <div class="pick-container">
-        <span th:text="${pick.label}"></span>
-        <span th:text="${pick.chosenWinner}"></span>
-        <span th:text="${pick.status}" class="status"></span>
-        <span th:text="${pick.betAmountLabel}" class="bet"></span>
-        <span th:text="${pick.payOutLabel}"></span>
-      </div>
-    </li>
-  </ul>
+<div th:if="${!picks.isEmpty()}">
+    <h1>Picks</h1>
+    <div class="picks">
+        <ul>
+            <li th:each="pick: ${picks}">
+                <div class="pick-container">
+                    <span th:text="${pick.eventLabel}"></span>
+                    <span th:text="${pick.label}"></span>
+                    <span th:text="${pick.chosenWinner}"></span>
+                    <span th:text="${pick.status}" class="status"></span>
+                    <div class="lower-part upper">
+                        <span th:text="${pick.betAmountLabel}" class="bet"></span>
+                        <span th:class="${pick.inParlay} ? 'error inParlay' : 'error'" th:text="${pick.inParlay} ? 'Already In Parley' : ''"></span>
+                    </div>
+                    <div class="lower-part">
+                        <span th:text="${pick.payOutLabel}"></span>
+                        <button class="parlay-start" onclick="select(event)" th:value="${pick.eventLabel}" th:id="${pick.id}" th:disabled="${pick.inParlay}" th:autoDisabled="${pick.inParlay}">Select For A Parlay</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="parlayDeclerationParent" th:if="${!picks.isEmpty()}">
+    <h1>Parlays</h1>
+    <button class="parlay-start create loader" id="parlayCreator" onclick="buildParlay(event)" disabled>Create Parlay</button>
+</div>
+ <div th:if="${!picks.isEmpty()}" >
+     <div class="picks upper">
+         <span class="parlayDisplay" id="parlayDisplay">No Parlay On</span>
+     </div>
+
+     <div class="picks">
+         <ul>
+             <li th:each="Parlay: ${parlays}">
+                 <div class="pick-container">
+                     <span th:text="'Parley For: ' + ${Parlay.label}"></span>
+                     <span class="parlayFor status" th:text="'Status: ' + ${Parlay.status}"></span>
+                     <div th:each="label: ${Parlay.pickLabels}">
+                         <span th:text="'• ' + ${label}"></span>
+                     </div>
+                     <span class="lower-part parlay" th:text="'Bet Amount: ' + ${Parlay.betAmount}"></span>
+                     <span th:text="'Payout: ' + ${Parlay.betAmount * 4}"></span>
+                 </div>
+             </li>
+         </ul>
+     </div>
+ </div>
+  <form action="/dashboard">
+      <button type="submit" class="side back loader" value="Back">Back</button>
+  </form>
+
+  <form action="/profile">
+      <button type="submit" class="side profile loader" value="Profile">Profile</button>
+  </form>
+
+  <div th:if="${picks.isEmpty()}" class="card">
+      <h1 class="no-bouts">You Have Placed No Picks</h1>
+  </div>
+
+  <script th:src="@{/loading.js}"></script>
+  <script th:src="@{/parlayBuilder.js}"></script>
 </body>
 </html>

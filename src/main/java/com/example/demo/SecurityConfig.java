@@ -24,7 +24,7 @@ public class SecurityConfig
     {
         http.
                 authorizeHttpRequests(auth -> auth.requestMatchers("/home", "/login", "/register", "/style.css",
-                                "/bg.png", "/", "/verify", "/auth.js").permitAll()
+                                "/bg.png", "/", "/verify", "/auth.js", "/loading.js", "/loading.css", "/forgotPassword", "/forgotPassword.js", "/checkCode").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(
                         new LoginUrlAuthenticationEntryPoint("/login")))

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,12 @@ public class UserService
         return newUser;
     }
 
+    public void updatePassword(AppUser appUser, String password)
+    {
+        appUser.setPassword(passwordEncoder.encode(password));
+        userRepository.save(appUser);
+    }
+
     public Boolean checkPassword(String password, AppUser appUser)
     {
         return passwordEncoder.matches(password, appUser.getPassword());
@@ -46,5 +53,20 @@ public class UserService
     public boolean existsByUsername(String username)
     {
         return userRepository.findByUsername(username).isPresent();
+    }
+
+    public int getRank(double pickAccuracy)
+    {
+        int rank;
+        List<AppUser> higherRank = userRepository.findByPickAccuracyGreaterThan(pickAccuracy);
+        if(higherRank == null || higherRank.isEmpty())
+        {
+            rank = 0;
+        }
+        else
+        {
+            rank = higherRank.size();
+        }
+        return rank+1;
     }
 }

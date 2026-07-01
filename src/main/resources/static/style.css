@@ -141,7 +141,71 @@ input:-webkit-autofill:active
      font-weight: 700;
 }
 
-.any.input.username
+.here.lower
 {
-    margin-top: 10px;
+    display: block;
+    text-align: left;
+    width: 110%;
+    margin-bottom: 0px;
+    padding-left: 0px;
+}
+
+.any.input.lower
+{
+    margin-bottom: 10px;
+}
+
+.side
+{
+     left: 20px;
+     position: absolute;
+     top: 20px;
+     width: auto;
+     background-color: #ad0909;
+     color: white;
+     border-radius: 4px;
+     padding: 14px;
+     transition: background-color 0.2s ease;
+     cursor: pointer;
+     border: none;
+     width: 8%;
+     font-size: 1rem;
+     font-weight: 700;
+}
+
+.submit-btn.sendCode
+{
+    border-radius: 16px;
+    display: block;
+    margin-bottom: 60px;
+    width: 90px;
+    height: 30px;
+    font-size: 0.8rem;
+    padding: 0px;
+}
+
+.submit-btn.sendCode:disabled
+{
+    background-color: #8f8f8f;
+}
+
+.information
+{
+    color: green;
+    position: absolute;
+    top: 109px;
+}
+
+.box-container.hiddenDiv
+{
+    position: absolute;
+    margin-top: 50px;
+    display: block;
+    bottom: 40px;
+    padding: 40px;
+}
+
+.box-container.hiddenDiv .any.input
+{
+    margin: 0px;
 }

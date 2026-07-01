@@ -30,21 +30,37 @@ document.querySelectorAll(".bet-buttons").forEach(group =>
 
 async function submit(event)
 {
+    event.preventDefault();
+
+    const button = event.target;
+
     const currCard = event.target.closest(".card");
-    const method = currCard.querySelector(".method-buttons .selected").textContent;
-    const winner = currCard.querySelector(".bet-buttons .selected").textContent;
+    const methodBtn = currCard.querySelector(".method-buttons .selected");
+    const winnerBtn = currCard.querySelector(".bet-buttons .selected");
+    const error = currCard.querySelector(".error");
+    if(methodBtn === null || winnerBtn === null)
+    {
+         error.textContent = "Place A Pick";
+         document.body.classList.remove('loading');
+         event.stopImmediatePropagation();
+         button.textContent = "Bet"
+         return;
+    }
+
+    const method = methodBtn.textContent;
+    const winner = winnerBtn.textContent;
     let amount = currCard.querySelector(".betAmount").value;
     const eventSlug = currCard.querySelector(".eventSlug").value;
     const loser = currCard.querySelector(".fighter-btn:not(.selected)").textContent;
     const boutId = event.target.value;
-    const error = currCard.querySelector(".error");
 
-    if(amount.trim() === "")
+    if(amount.trim() === "" || amount.trim() === "0")
     {
         error.textContent = "Input Bet Amount";
-
+        event.stopImmediatePropagation();
         clear(currCard);
-
+        document.body.classList.remove('loading');
+        button.textContent = "Bet"
         return;
     }
 
@@ -57,8 +73,6 @@ async function submit(event)
     formData.append("eventSlug", eventSlug);
     formData.append("loser", loser);
 
-    event.preventDefault();
-
     const response = await fetch('http://localhost:8080/pick',
     {
         method: 'POST',
@@ -66,6 +80,9 @@ async function submit(event)
     })
     .catch(() => {
         error.textContent = "Server Down";
+        document.body.classList.remove('loading');
+        button.textContent = "Bet"
+        event.stopImmediatePropagation();
         return;
     })
 
@@ -81,6 +98,9 @@ async function submit(event)
       }
       else error.textContent = "Error Has Occurred";
 
+      document.body.classList.remove('loading');
+      button.textContent = "Bet"
+      event.stopImmediatePropagation();
       clear(currCard);
 
       return;
@@ -88,6 +108,9 @@ async function submit(event)
 
     error.classList.remove("deselected");
     error.textContent = "Pick Has Been Recorded";
+
+    document.body.classList.remove('loading');
+    button.textContent = "Bet"
 
     clear(currCard);
 

@@ -22,6 +22,8 @@ public class pickService
             existing.setChosenMethod(method);
             existing.setChosenWinner(winner);
             existing.setLoser(loser);
+
+            existing.setLabel(winner + " By " + method);
             return existing;
         }).orElseGet(() ->
         {
@@ -32,6 +34,8 @@ public class pickService
             newPick.setUser(appUser);
             newPick.setEventSlug(eventSlug);
             newPick.setLoser(loser);
+
+            newPick.setLabel(winner + " By " + method);
             return newPick;
         });
 
@@ -48,5 +52,12 @@ public class pickService
     protected List<Pick> getPicksFromUser(AppUser appUser)
     {
         return pickRepository.findAllByUser(appUser);
+    }
+
+    protected List<Pick> getPicksFromIds(List<Long> Ids) { return pickRepository.findAllById(Ids); }
+
+    protected void save(Pick pick)
+    {
+        pickRepository.save(pick);
     }
 }

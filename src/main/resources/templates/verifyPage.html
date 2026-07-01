@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Verify</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
+    <link rel="stylesheet" th:href="@{/loading.css}" />
 </head>
 <body>
 <h1>Enter The Code Sent To Your Mail</h1>
@@ -20,9 +21,10 @@
 
         <br>
 
-        <button class="submit-btn" type="submit">Verify</button>
+        <button class="submit-btn" type="submit" id="card-btn">Verify</button>
 
     </form>
 </div>
+    <script th:src="@{loading.js}"></script>
 </body>
 </html>
