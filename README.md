@@ -1,4 +1,3 @@
-# 🥊 BlackJack.Nest
 # 🥊 Blackjack.Nest
 
 > **A UFC fantasy prediction platform built with Java Spring Boot.**
