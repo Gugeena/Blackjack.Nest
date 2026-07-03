@@ -29,6 +29,18 @@ Unlike traditional betting platforms, **Blackjack.Nest does not involve real mon
 * Automatic synchronization with the **Cito API**
 * Official fight results are automatically updated once available
 
+## 🎟️ Parlay System
+
+Blackjack.Nest includes a **Parlay System**, allowing users to combine multiple fight predictions into a single wager for a higher reward.
+
+### How Parlays Work
+
+* A parlay can only contain predictions from the **same UFC event**.
+* Users place **one shared wager** on the entire parlay that is total of all picks inside the parlay.
+* The potential payout is **4× the total amount of Medals wagered**.
+* A parlay is successful **only if every prediction in the parlay is correct**.
+* If even one prediction is incorrect, the entire parlay loses.
+
 ### 🪙 Medal System
 
 * Bet your virtual **Medals** on predictions
