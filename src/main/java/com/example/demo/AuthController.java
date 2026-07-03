@@ -106,6 +106,7 @@ public class AuthController
 
             httpSession.setAttribute("username", username);
             httpSession.setAttribute("password", password);
+            httpSession.setAttribute("hasSent", true);
             return ResponseEntity.ok(Map.of("redirect", "verify"));
         }
 
@@ -149,7 +150,6 @@ public class AuthController
 
         httpSession.setAttribute("username", username);
 
-
         if(appUser.getEmail() != null && !appUser.getEmail().isBlank())
         {
             String otp = String.valueOf(new Random().nextInt(100000, 1000000));
@@ -161,6 +161,7 @@ public class AuthController
             {
                 return ResponseEntity.ok(Map.of("redirect", "error"));
             }
+            httpSession.setAttribute("hasSent", true);
             return ResponseEntity.ok(Map.of("redirect", "verify"));
         }
 
@@ -171,8 +172,15 @@ public class AuthController
 
     @GetMapping("/verify")
     protected String displayVerify(@RequestParam(required = false) String error,
-                                   Model model)
+                                   Model model,
+                                   HttpSession httpSession)
     {
+        boolean sentCode = Boolean.TRUE.equals(httpSession.getAttribute("hasSent"));
+        if(!sentCode)
+        {
+            System.out.println("aq var");
+            return "redirect:/home";
+        }
         model.addAttribute("error", error);
         return "verifyPage";
     }
@@ -191,6 +199,7 @@ public class AuthController
         httpSession.removeAttribute("password");
         httpSession.removeAttribute("email");
         httpSession.removeAttribute("otp");
+        httpSession.removeAttribute("hasSent");
 
         if (!code.equals(savedCode))
         {
@@ -323,13 +332,12 @@ public class AuthController
     protected ResponseEntity<?> verifyCode(@RequestParam String code, HttpSession httpSession, Model model)
     {
         String otp = (String) httpSession.getAttribute("otpForForgot");
-        httpSession.removeAttribute("otpForForgot");
         if(!otp.equals(code))
         {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("error", "Wrong Code"));
         }
-
+        httpSession.removeAttribute("otpForForgot");
         return ResponseEntity.ok(Map.of("checking", true));
     }
 

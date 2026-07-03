@@ -315,12 +315,12 @@ public class EventController
                             correct = false;
                             parlayOutCome = "The House Always Wins!";
                         }
+                        else parlayOutCome = "Correct!";
                     }
-                    parlayOutCome = "Correct!";
                     BigInteger multiplier = new BigInteger("4");
                     updateMedals(correct, appUser, betAmount, multiplier);
-                }
 
+                }
                 parlayResponse.setStatus(parlayOutCome);
             }
         }

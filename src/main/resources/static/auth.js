@@ -13,14 +13,14 @@ async function register(event)
 
     if(username.length < 4 || password.length < 4)
     {
-        removeLoading("Register", loader);
+        removeLoading("Register", loader, event);
         error.textContent = "Username And Password Must Be Over 4 Characters";
         return;
     }
 
     if(!regex.test(username))
     {
-        removeLoading("Register", loader);
+        removeLoading("Register", loader, event);
         error.textContent = "Username Must Only Contain Letters And Numbers";
         return;
     }
@@ -47,7 +47,7 @@ async function register(event)
           console.log("unwraped");
           if(!response.ok)
           {
-             removeLoading("Register", loader);
+             removeLoading("Register", loader, event);
 
             error.textContent = data.error;
           }
@@ -59,7 +59,7 @@ async function register(event)
     }
     catch(err)
     {
-       removeLoading("Register", loader);
+       removeLoading("Register", loader, event);
        error.textContent = "Server Down"; return
     }
 }
@@ -77,7 +77,7 @@ async function login(event)
 
     if(username.length < 4 || password.length < 4)
     {
-        removeLoading("Login", loader);
+        removeLoading("Login", loader, event);
         error.textContent = "Invalid Username Or Password";
         return;
     }
@@ -99,7 +99,7 @@ async function login(event)
 
        if(!response.ok)
        {
-          removeLoading("Login", loader);
+          removeLoading("Login", loader, event);
           error.textContent = data.error;
        }
        else
@@ -109,13 +109,13 @@ async function login(event)
     }
     catch(err)
     {
-       if(loader != null) removeLoading("Login", loader);
+       if(loader != null) removeLoading("Login", loader, event);
        error.textContent = "Server Down";
        return;
     }
 }
 
-function removeLoading(text, loader)
+function removeLoading(text, loader, event)
 {
     document.body.classList.remove('loading');
     loader.textContent = text;

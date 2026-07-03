@@ -25,21 +25,20 @@ document.querySelectorAll(".loader").forEach(el =>
 {
     el.addEventListener('click', (event) => {
 
-        if(el.id != "card-btn");
-        {
-           let loader = event.target;
-           let content = "Loading..."
-           if(el.id === "myPicks")
-           {
-              loader = event.target.querySelector("h1");
-           }
-           else if(el.id === "parlayCreator")
-           {
-              content = "Creating...";
-           }
-           loader.textContent = content;
-        }
-
         document.body.classList.add('loading');
+        if(el.id === "card-btn") return;
+
+        let loader = event.target;
+        let content = "Loading..."
+        if(el.id === "myPicks")
+        {
+           loader = event.target.querySelector("h1");
+        }
+        else if(el.id === "parlayCreator")
+        {
+           content = "Creating...";
+        }
+        loader.textContent = content;
+
     });
 })

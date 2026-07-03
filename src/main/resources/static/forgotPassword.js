@@ -175,5 +175,5 @@ async function updatePassword(event)
          return;
       }
 
-      window.href.location = "/login";
+      window.location.href = "/login";
 }

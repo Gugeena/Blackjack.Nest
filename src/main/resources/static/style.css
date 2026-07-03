@@ -200,7 +200,7 @@ input:-webkit-autofill:active
 {
     position: absolute;
     margin-top: 50px;
-    display: block;
+    display: none;
     bottom: 40px;
     padding: 40px;
 }

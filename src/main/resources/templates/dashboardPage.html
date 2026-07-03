@@ -9,13 +9,13 @@
 <body>
     <ul>
         <li th:each="event: ${events}">
-            <div class="event-container">
+            <div class="event-container unLoadable">
                 <form th:action="@{/bouts/{id}(id=${event.slug})}">
-                    <button type = "submit" class="event-btn loader" id="card-btn">
-                        <h1 th:text="${event.title}" class="text"></h1>
-                        <span th:text="${event.locationText}" class="text"></span>
-                        <span th:text="${event.startTime}" class="text"></span>
-                        <img th:src="${event.image}" class="display-Image"/>
+                    <button type = "submit" id="card-btn" class="event-btn loader" >
+                        <h1 th:text="${event.title}" class="text" ></h1>
+                        <span th:text="${event.locationText}" class="text" ></span>
+                        <span th:text="${event.startTime}" class="text" ></span>
+                        <img th:src="${event.image}" class="display-Image" />
                     </button>
                 </form>
             </div>
@@ -24,7 +24,7 @@
 
     <div class="event-container">
         <form action="/mypicks">
-            <button type = "submit" class="event-btn yours loader" value="My Picks" id="myPicks">
+            <button type = "submit" class="event-btn yours loader unLoadable" value="My Picks" id="myPicks">
                 <h1 class="text" value="My Picks">My Picks</h1>
             </button>
         </form>
