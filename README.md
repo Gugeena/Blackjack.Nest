@@ -100,7 +100,7 @@ Fill in:
 
 * PostgreSQL credentials
 * Email credentials
-* Cito API credentials (if required)
+* Cito API credentials
 
 ## 4. Configure PostgreSQL
 
