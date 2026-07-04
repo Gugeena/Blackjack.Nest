@@ -85,7 +85,7 @@ Each user has access to:
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Blackjack.Nest.git
+git clone https://github.com/Gugeena/Blackjack.Nest.git
 ```
 
 ## 2. Open the project
