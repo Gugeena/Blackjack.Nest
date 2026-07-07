@@ -19,6 +19,7 @@ Unlike traditional betting platforms, **Blackjack.Nest does not involve real mon
 * Secure Login
 * Email Two-Factor Authentication (2FA)
 * Session-based Authentication with Spring Security
+* Update account information, including username, email, and password
 
 ## 🥊 Fight Predictions
 
@@ -35,13 +36,15 @@ Unlike traditional betting platforms, **Blackjack.Nest does not involve real mon
 * ❌ Incorrect prediction → Lose your wager
 * No real money involved
 
-## 📊 Statistics
+## 📊 Statistics & Profile
 
 Each user has access to:
 
 * Prediction History
 * Total Medals
 * Prediction Accuracy (%)
+* Global ranking based on prediction accuracy
+* Personal profile with editable account information (username, email, and password)
 
 ---
 
