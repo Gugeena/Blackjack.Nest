@@ -11,17 +11,16 @@ Unlike traditional betting platforms, **Blackjack.Nest does not involve real mon
 
 ---
 
-# ✨ Features
+## ✨ Features
 
-## 🔐 Authentication
+### 🔐 Authentication
 
 * User Registration
 * Secure Login
 * Email Two-Factor Authentication (2FA)
 * Session-based Authentication with Spring Security
-* Update account information, including username, email, and password
 
-## 🥊 Fight Predictions
+### 🥊 Fight Predictions
 
 * Predict the winner of upcoming UFC fights
 * Select the method of victory
@@ -29,30 +28,28 @@ Unlike traditional betting platforms, **Blackjack.Nest does not involve real mon
 * Automatic synchronization with the **Cito API**
 * Official fight results are automatically updated once available
 
-## 🎟️ Parlay System
+###  🎟️ Parlay System
 
 * A parlay can only contain predictions from the **same UFC event**.
-* Users place **one shared wager** on the entire parlay.
+* Users place **one shared wager** on the entire parlay that is total of all picks inside the parlay.
 * The potential payout is **4× the total amount of Medals wagered**.
 * A parlay is successful **only if every prediction in the parlay is correct**.
 * If even one prediction is incorrect, the entire parlay loses.
 
-## 🪙 Medal System
+### 🪙 Medal System
 
 * Bet your virtual **Medals** on predictions
 * ✅ Correct prediction → Earn **2×** your wager
 * ❌ Incorrect prediction → Lose your wager
 * No real money involved
 
-## 📊 Statistics & Profile
+### 📊 Statistics
 
 Each user has access to:
 
 * Prediction History
 * Total Medals
 * Prediction Accuracy (%)
-* Global ranking based on prediction accuracy
-* Personal profile with editable account information (username, email, and password)
 
 ---
 
@@ -64,8 +61,8 @@ Each user has access to:
 * 🍃 Spring Boot
 * 🔒 Spring Security
 * 📦 Spring Data JPA
-* 🗄️ Hibernate
-* ✉️ Spring Boot Mail
+* 🗄 Hibernate
+* ✉ Spring Boot Mail
 * 🌿 Lombok
 * 🍃 Thymeleaf
 * 🌐 Cito API
@@ -88,26 +85,34 @@ Each user has access to:
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/Blackjack.Nest.git
-
+git clone https://github.com/Gugeena/Blackjack.Nest.git
 ```
-## 2. Configure Environment Variables
+
+## 2. Open the project
+
+Open the project using **IntelliJ IDEA**.
+
+## 3. Configure Environment Variables
+
+Create a `.env` file using `.env.example`.
 
 Fill in:
 
-* .env file for postgreSQL and email credentials
+* PostgreSQL credentials
+* Email credentials
+* Cito API credentials
 
-## 3. Open the Project
+## 4. Configure PostgreSQL
 
-Open the project using **IntelliJ IDEA**.
+Create your PostgreSQL database and update the connection settings.
 
 ## 5. Run the Application
 
 Start the Spring Boot application.
 
-The application will be available at:
+The website will be available at:
 
-```text
+```
 http://localhost:8080
 ```
 
@@ -117,10 +122,10 @@ http://localhost:8080
 
 No pre-created test accounts are provided.
 
-Users can register directly through the application.
+Users can register directly inside the application.
 
-* Email verification (2FA via Java Mail) is recommended but optional.
-* Registration also works with standard user credentials.
+Email verification (2FA via Java Mail) is recommended but optional
+Registration works with standard user credentials
 
 ---
 
@@ -166,14 +171,8 @@ src
 
 # 📸 Screenshots
 
-<p align="center">
-  <img width="100%" alt="Dashboard" src="https://github.com/user-attachments/assets/2cafc211-002f-4367-bedd-f67dbf95ed18" />
-</p>
-
-<p align="center">
-  <img width="100%" alt="Predictions" src="https://github.com/user-attachments/assets/f22a548b-d1a8-4107-8ebf-4cf912ab828a" />
-</p>
-
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/2cafc211-002f-4367-bedd-f67dbf95ed18" />
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/f22a548b-d1a8-4107-8ebf-4cf912ab828a" />
 ---
 
 # 📜 License
@@ -186,4 +185,5 @@ This project was created for educational and portfolio purposes.
 
 **ლაშა-გიორგი გუგენიშვილი**
 
-*Solo Project • Java Spring Boot • UFC Fantasy Prediction Platform*
+Solo Project • Java Spring Boot • UFC Fantasy Prediction Platform
+
