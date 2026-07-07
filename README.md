@@ -1,3 +1,5 @@
+/* PROJECT USED TO HAVE PROFILE CUSTOMIZATION THAT I ADDED LAST SECOND BUT DUE TO SUDDEN POWEROUTAGE ONE DRIVE CORRUPTED MY FILES AND I HAD TO ROLLBACK TO EARLIER VERSION. WE WILL BE BACK ILIA TOPURIA STYLE. INSHALLAH PROFILE CUSTOMIZATION WILL BE BACK AFTER I STOP TWEAKING ABOUT IT. */
+
 # 🥊 Blackjack.Nest
 
 > **A UFC fantasy prediction platform built with Java Spring Boot.**
@@ -87,26 +89,19 @@ Each user has access to:
 ```bash
 git clone https://github.com/Gugeena/Blackjack.Nest.git
 ```
+## 2. Configure Environment Variables
 
-## 2. Open the project
-
-Open the project using **IntelliJ IDEA**.
-
-## 3. Configure Environment Variables
-
-Create a `.env` file using `.env.example`.
-
-Fill in:
+Fill the .env file with the copied credentials:
 
 * PostgreSQL credentials
 * Email credentials
 * Cito API credentials
 
-## 4. Configure PostgreSQL
+## 3. Open the project
 
-Create your PostgreSQL database and update the connection settings.
+Open the project using **IntelliJ IDEA**.
 
-## 5. Run the Application
+## 4. Run the Application
 
 Start the Spring Boot application.
 
