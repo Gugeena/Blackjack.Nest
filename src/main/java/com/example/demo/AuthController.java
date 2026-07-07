@@ -36,19 +36,19 @@ public class AuthController
     @GetMapping("/register")
     protected String displayRegister()
     {
-        return pageOrHome("registerPage");
+        return pageOrDashboard("registerPage");
     }
 
     @GetMapping("/home")
     protected String displayHome()
     {
-        return "homePage";
+        return pageOrDashboard("homePage");
     }
 
     @GetMapping("")
     protected String display()
     {
-        return pageOrHome("redirect:/home");
+        return pageOrDashboard("redirect:/home");
     }
 
     @PostMapping("/register")
@@ -109,7 +109,7 @@ public class AuthController
     @GetMapping("/login")
     protected String displayLogin()
     {
-        return pageOrHome("login");
+        return pageOrDashboard("login");
     }
 
     @PostMapping("/login")
@@ -366,7 +366,7 @@ public class AuthController
         userService.saveUser(newUser);
     }
 
-    String pageOrHome(String page)
+    String pageOrDashboard(String page)
     {
         if(checkAuth())
         {
